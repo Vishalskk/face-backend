@@ -1,19 +1,17 @@
-FROM python:3.9-slim
+# Use official Python image
+FROM python:3.10-slim
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    cmake \
-    libopenblas-dev \
-    liblapack-dev \
-    libx11-dev \
-    libgtk-3-dev \
-    && rm -rf /var/lib/apt/lists/*
-
+# Set working directory
 WORKDIR /app
 
+# Copy app files
 COPY . .
 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
+# Expose port
+EXPOSE 8000
+
+# Start the app
 CMD ["python", "app.py"]
